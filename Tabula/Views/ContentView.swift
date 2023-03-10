@@ -9,9 +9,9 @@ import SwiftUI
 
 struct ContentView: View {
     @Binding var document: TabulaDocument
-
+    
     var body: some View {
-        TextEditor(text: $document.text)
+        Text("Hello, World!")
     }
 }
 

@@ -13,5 +13,9 @@ struct TabulaApp: App {
         DocumentGroup(newDocument: TabulaDocument()) { file in
             ContentView(document: file.$document)
         }
+        
+        Window("Schematic Editor", id: "sch") {
+            SchematicEditor()
+        }
     }
 }
