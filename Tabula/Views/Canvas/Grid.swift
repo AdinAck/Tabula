@@ -29,6 +29,7 @@ struct Grid: Shape {
         let size = (scale / factor - 1) / (subdivisions - 1)
         let scaledGap = gridSize * scale / factor
         
+        // TODO: render artifacts on edges of grid need to be fixed... what is the cause?
         for i in -1...Int(width) / Int(scaledGap) {
             for j in -1...Int(height) / Int(scaledGap) {
                 let size = dotSize * (doScale ? size : 1)
