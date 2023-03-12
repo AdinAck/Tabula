@@ -39,39 +39,61 @@ extension CGSize: AdditiveArithmetic {
 struct Canvas: View {
     @State var items: [Component]
     
-    @State private var subs = Set<AnyCancellable>() // Cancel onDisappear
+    @State private var subs = Set<AnyCancellable>()
     
     @State var scale: CGFloat = 1
     @State private var startx: CGFloat = 0
     @State private var starty: CGFloat = 0
-    @State var x: CGFloat = 0
-    @State var y: CGFloat = 0
+    @State var origin: CGPoint = CGPoint.zero
+    
+    @State private var rawMouse: CGPoint = CGPoint.zero
+    @State private var mouse: CGPoint = CGPoint.zero
+    @State private var frame: CGRect = CGRect(origin: CGPoint.zero, size: CGSize.zero)
     
     private func setScale(delta: CGFloat) {
-        let lower: CGFloat = 0.1
-        let upper: CGFloat = 2
+        let lower: CGFloat = 1
+        let upper: CGFloat = 50
         
-        scale = min(max(scale + delta, lower), upper)
-    }
+        if (lower...upper).contains(scale * (1 + delta)) {
+            origin.x -= (mouse.x - origin.x) * delta
+            origin.y -= (mouse.y - origin.y) * delta
+            scale *= 1 + delta
+            // scale += delta -> delta / scale
+            // scale *= (1 + delta)
+            // scale +=
+        }
+     }
     
     private func clampPos() {
-        let lower: CGFloat = -1000
-        let upper: CGFloat = 1000
+        let lower: CGFloat = -500 * scale
+        let upper: CGFloat = 500 * scale
         
-        x = min(max(x, lower), upper)
-        y = min(max(y, lower), upper)
+        origin.x = min(max(origin.x, lower), upper)
+        origin.y = min(max(origin.y, lower), upper)
     }
     
-    func trackScrollWheel() {
+    func trackEvents() {
         NSApp.publisher(for: \.currentEvent)
-            .filter { event in event?.type == .scrollWheel }
-        //            .throttle(for: .milliseconds(10),
-        //                      scheduler: DispatchQueue.main,
-        //                      latest: true)
             .sink { event in
-                //                vm?.goBackOrForwardBy(delta: Int(event?.deltaY ?? 0))
-                if let y = event?.deltaY {
-                    setScale(delta: -y/100)
+                if let event {
+                    switch event.type {
+                    case .scrollWheel:
+                        withAnimation(.spring(response: 0.2, dampingFraction: 1)) {
+                            setScale(delta: -event.deltaY/100)
+                        }
+                    case .rightMouseDragged:
+                        origin.x += event.deltaX
+                        origin.y += event.deltaY
+                    case .rightMouseUp:
+                        withAnimation(.spring()) {
+                            clampPos()
+                        }
+                    case .mouseMoved:
+                        rawMouse = event.locationInWindow
+                    default:
+                        return
+                    }
+                    
                 }
             }
             .store(in: &subs)
@@ -83,15 +105,19 @@ struct Canvas: View {
             Color.white.opacity(0.1)
             
             GeometryReader { geometry in
+                let frame = geometry.frame(in: CoordinateSpace.global) // for mouse
+                
                 let width = geometry.size.width
                 let height = geometry.size.height
                 let center = CGPoint(x: width / 2, y: height / 2)
-                let origin = CGPoint(x: x + center.x , y: y + center.y)
+                let origin = origin + center
                 
                 let gridSize: CGFloat = 20
                 
-                Grid(width: width, height: height, origin: origin, gridSize: gridSize, dotSize: 2)
-                
+                Grid(width: width, height: height, origin: origin, scale: scale, gridSize: gridSize, dotSize: 2)
+                    .onChange(of: scale) { newValue in
+                        mouse = CGPoint(x: rawMouse.x - frame.origin.x, y: height - rawMouse.y) - center
+                    }
                 ForEach(items) { item in
                     item.symbol.view(origin: origin)
                         .gesture(
@@ -110,27 +136,20 @@ struct Canvas: View {
                 }
             }
         }
-        .gesture(
-            DragGesture()
-                .onChanged({ gesture in
-                    x = startx + gesture.translation.width
-                    y = starty + gesture.translation.height
-                })
-                .onEnded({ gesture in
-                    let strength = (gesture.predictedEndTranslation - gesture.translation).magnitude
-                    
-                    withAnimation(.interpolatingSpring(stiffness: 100, damping: 100, initialVelocity: strength / 30)) {
-                        x = startx + gesture.predictedEndTranslation.width
-                        y = starty + gesture.predictedEndTranslation.height
-                        clampPos()
-                    }
-                    
-                    startx = x
-                    starty = y
-                })
-        )
         .onAppear {
-            //            trackScrollWheel()
+            trackEvents()
+        }
+        .onDisappear {
+            for sub in subs {
+                sub.cancel()
+            }
+        }
+        .onHover { hovering in
+            if hovering {
+                NSCursor.crosshair.push()
+            } else {
+                NSCursor.pop()
+            }
         }
     }
 }

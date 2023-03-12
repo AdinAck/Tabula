@@ -8,7 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		402BBD9429BBABDD001193BA /* SchematicEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402BBD9329BBABDD001193BA /* SchematicEditor.swift */; };
-		402BBD9729BBB487001193BA /* VerticalToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402BBD9629BBB487001193BA /* VerticalToolbar.swift */; };
+		402BBD9729BBB487001193BA /* SchSecondaryToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402BBD9629BBB487001193BA /* SchSecondaryToolbar.swift */; };
+		402BBD9929BBB8C7001193BA /* SchPrimaryToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402BBD9829BBB8C7001193BA /* SchPrimaryToolbar.swift */; };
 		40555D5029B98AF3001422E1 /* TabulaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40555D4F29B98AF3001422E1 /* TabulaApp.swift */; };
 		40555D5229B98AF3001422E1 /* TabulaDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40555D5129B98AF3001422E1 /* TabulaDocument.swift */; };
 		40555D5429B98AF3001422E1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40555D5329B98AF3001422E1 /* ContentView.swift */; };
@@ -24,7 +25,8 @@
 
 /* Begin PBXFileReference section */
 		402BBD9329BBABDD001193BA /* SchematicEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchematicEditor.swift; sourceTree = "<group>"; };
-		402BBD9629BBB487001193BA /* VerticalToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalToolbar.swift; sourceTree = "<group>"; };
+		402BBD9629BBB487001193BA /* SchSecondaryToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchSecondaryToolbar.swift; sourceTree = "<group>"; };
+		402BBD9829BBB8C7001193BA /* SchPrimaryToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchPrimaryToolbar.swift; sourceTree = "<group>"; };
 		40555D4C29B98AF3001422E1 /* Tabula.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tabula.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		40555D4F29B98AF3001422E1 /* TabulaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabulaApp.swift; sourceTree = "<group>"; };
 		40555D5129B98AF3001422E1 /* TabulaDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabulaDocument.swift; sourceTree = "<group>"; };
@@ -55,9 +57,18 @@
 		402BBD9529BBB478001193BA /* Editor */ = {
 			isa = PBXGroup;
 			children = (
-				402BBD9629BBB487001193BA /* VerticalToolbar.swift */,
+				402BBD9A29BBDA00001193BA /* Schematic */,
 			);
 			path = Editor;
+			sourceTree = "<group>";
+		};
+		402BBD9A29BBDA00001193BA /* Schematic */ = {
+			isa = PBXGroup;
+			children = (
+				402BBD9829BBB8C7001193BA /* SchPrimaryToolbar.swift */,
+				402BBD9629BBB487001193BA /* SchSecondaryToolbar.swift */,
+			);
+			path = Schematic;
 			sourceTree = "<group>";
 		};
 		40555D4329B98AF3001422E1 = {
@@ -207,9 +218,10 @@
 				40555D6729B9A8B1001422E1 /* Grid.swift in Sources */,
 				40555D7329BA3E13001422E1 /* Footprint.swift in Sources */,
 				402BBD9429BBABDD001193BA /* SchematicEditor.swift in Sources */,
+				402BBD9929BBB8C7001193BA /* SchPrimaryToolbar.swift in Sources */,
 				40555D7129BA3E0E001422E1 /* Symbol.swift in Sources */,
 				40555D6D29BA3A11001422E1 /* CanvasItem.swift in Sources */,
-				402BBD9729BBB487001193BA /* VerticalToolbar.swift in Sources */,
+				402BBD9729BBB487001193BA /* SchSecondaryToolbar.swift in Sources */,
 				40555D6429B98B19001422E1 /* Canvas.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

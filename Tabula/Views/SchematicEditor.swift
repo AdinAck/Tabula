@@ -8,32 +8,51 @@
 import SwiftUI
 
 struct SchematicEditor: View {
+    @State var document: String? = nil
+    
     @State var components: [Component] = []
     
-    private static let tools: [[(() -> Void, String)]] = [
-        [({ }, "gear")]
-    ]
+    private func toggleSidebar() {
+        NSApp.keyWindow?.firstResponder?.tryToPerform(#selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
+    }
     
     var body: some View {
         NavigationView {
-            List {
-                Text("Test")
-            }
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    Button {
-                        // nothing
-                    } label: {
-                        Image(systemName: "square.and.arrow.up")
-                    }
-
+            List(selection: $document) {
+                Section("Project Files") {
+                    Text("tmp")
+                        .tag("tmp")
                 }
             }
             
-            Canvas(items: components)
-            
-            VerticalToolbar(tools: SchematicEditor.tools)
+            ZStack {
+                Canvas(items: components)
+                
+                HStack {
+                    Spacer()
+                        .layoutPriority(1)
+                    
+                    SchSecondaryToolbar()
+                        .background(.background)
+                }
+            }
         }
+        .toolbar {
+            ToolbarItemGroup(placement: .navigation) {
+                HStack {
+                    Button {
+                        toggleSidebar()
+                    } label: {
+                        Image(systemName: "sidebar.leading")
+                    }
+                    
+                    Divider()
+                    
+                    SchPrimaryToolbar()
+                }
+            }
+        }
+        .navigationTitle("")
     }
 }
 
