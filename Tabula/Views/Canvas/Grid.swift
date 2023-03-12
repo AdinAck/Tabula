@@ -29,9 +29,9 @@ struct Grid: Shape {
         let size = (scale / factor - 1) / (subdivisions - 1)
         let scaledGap = gridSize * scale / factor
         
-        // TODO: render artifacts on edges of grid need to be fixed... what is the cause?
-        for i in -1...Int(width) / Int(scaledGap) {
-            for j in -1...Int(height) / Int(scaledGap) {
+        // ranges are extended by 2 because of a subtle float precision error i think
+        for i in -2...Int(width) / Int(scaledGap) + 1 {
+            for j in -2...Int(height) / Int(scaledGap) + 1 {
                 let size = dotSize * (doScale ? size : 1)
                 path.addEllipse(in: CGRect(
                     x: origin.x.truncatingRemainder(dividingBy: scaledGap) + CGFloat(i) * scaledGap - size / CGFloat(2),
