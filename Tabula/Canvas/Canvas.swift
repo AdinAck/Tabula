@@ -13,8 +13,11 @@ class Canvas: ObservableObject {
     // params
     @Published var items: [Component] = [Component(symbol: Symbol())]
     
+    // public
     @Published var scale: CGFloat = 1
     @Published var origin: CGPoint = CGPoint.zero
+    
+    @Published var selected: Set<Component> = Set()
     
     // internal
     @Published fileprivate var mouse: CGPoint = CGPoint.zero
@@ -22,7 +25,7 @@ class Canvas: ObservableObject {
     
     fileprivate let gridSize: CGFloat = 20
     
-    var view: some View {
+    func view() -> some View {
         CanvasView()
             .environmentObject(self)
     }
@@ -91,10 +94,15 @@ struct CanvasView: View {
     
     var body: some View {
         ZStack {
+            // background
             Color.black
             Color.white.opacity(0.1)
+                .onTapGesture {
+                    model.selected.removeAll()
+                }
             
             VStack {
+                // canvas
                 GeometryReader { geometry in
                     let frame = geometry.frame(in: CoordinateSpace.global) // for mouse
                     
@@ -110,20 +118,29 @@ struct CanvasView: View {
                         }
                     
                     ForEach(model.items) { item in
+                        let selected = model.selected.contains(item)
+                        
                         item.symbol.view(origin: origin, gridSize: model.gridSize, scale: model.scale)
                             .gesture(
                                 DragGesture()
                                     .onChanged({ gesture in
+                                        model.selected.insert(item)
+                                        
                                         withAnimation(.spring(response: 0.1)) {
                                             item.symbol.position = ((gesture.location - origin).scale(by: 1.0 / (model.gridSize * model.scale))).snap(to: 1)
                                         }
                                     })
+                                    .onEnded({ gesture in
+                                        model.selected.remove(item)
+                                    })
                             )
                             .onTapGesture {
-                                withAnimation(.spring(response: 0.2, dampingFraction: 1)) {
-                                    item.symbol.position = CGPoint(x: 0, y: 0)
-                                }
+//                                withAnimation(.spring(response: 0.2, dampingFraction: 1)) {
+//                                    item.symbol.position = CGPoint(x: 0, y: 0)
+//                                }
+                                model.selected.insert(item)
                             }
+                            .shadow(color: .blue, radius: selected ? 10 * model.scale : 0)
                     }
                 }
                 .layoutPriority(1)

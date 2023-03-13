@@ -43,10 +43,26 @@ struct SymbolView: CanvasItem {
                 }))
             }
         }
+        .fill(.yellow)
+        .saturation(0.2)
     }
 }
 
-// this is needed literally because of a SwiftUI bug
+/*
+ LESSON
+ ------
+ 
+ changes to published states in observable objects
+ do not propegate within the object itself,
+ only to views that register it as an
+ observed object
+ 
+ because of this i have to make this wrapper
+ view that passses the appropriate animated
+ states into the raw symbolview in order
+ for animations to work
+ */
+
 struct _SymbolWrapper: View {
     @EnvironmentObject var model: Symbol
     

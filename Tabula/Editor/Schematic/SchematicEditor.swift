@@ -27,7 +27,7 @@ struct SchematicEditor: View {
             }
             
             ZStack {
-                canvas.view
+                canvas.view()
                 
                 HStack {
                     Spacer()

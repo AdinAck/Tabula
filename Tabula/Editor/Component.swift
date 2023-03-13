@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Component: ObservableObject, Identifiable {
+class Component: ObservableObject, Identifiable, Hashable {
     @Published var symbol: Symbol
     @Published var footprint: Footprint = Footprint()
     
@@ -15,5 +15,13 @@ class Component: ObservableObject, Identifiable {
     
     init(symbol: Symbol) {
         self.symbol = symbol
+    }
+    
+    static func == (lhs: Component, rhs: Component) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }

@@ -59,6 +59,7 @@
 		402BBD9529BBB478001193BA /* Editor */ = {
 			isa = PBXGroup;
 			children = (
+				40555D6E29BA3DE4001422E1 /* Component.swift */,
 				407E3D6229BEA49400DBCAE0 /* Layout */,
 				402BBD9A29BBDA00001193BA /* Schematic */,
 			);
@@ -121,7 +122,6 @@
 			isa = PBXGroup;
 			children = (
 				40555D6329B98B19001422E1 /* Canvas.swift */,
-				40555D6E29BA3DE4001422E1 /* Component.swift */,
 				40555D6C29BA3A11001422E1 /* CanvasItem.swift */,
 				40555D6629B9A8B1001422E1 /* Grid.swift */,
 			);
