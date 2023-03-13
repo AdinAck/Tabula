@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct Symbol {
     typealias Lines = [[CGPoint]]
@@ -15,5 +16,12 @@ struct Symbol {
     
     func view(origin: CGPoint) -> CanvasItem {
         CanvasItem(origin: origin, position: position, lines: lines)
+    }
+}
+
+struct _SymbolView: Shape {
+    func path(in rect: CGRect) -> Path {
+        Path { path in
+        }
     }
 }
