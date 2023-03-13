@@ -6,8 +6,17 @@
 //
 
 import Foundation
+import SwiftUI
 
 extension CGPoint: AdditiveArithmetic {
+    public func scale(by factor: Double) -> Self {
+        CGPoint(x: x * factor, y: y * factor)
+    }
+    
+    public var magnitudeSquared: Double {
+        pow(self.x, 2) + pow(self.y, 2)
+    }
+    
     public static func + (lhs: CGPoint, rhs: CGPoint) -> CGPoint {
         CGPoint(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
     }

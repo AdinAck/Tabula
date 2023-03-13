@@ -11,7 +11,7 @@ import Combine
 
 class Canvas: ObservableObject {
     // params
-    @Published var items: [Component] = []
+    @Published var items: [Component] = [Component(symbol: Symbol())]
     
     @Published var scale: CGFloat = 1
     @Published var origin: CGPoint = CGPoint.zero
@@ -23,7 +23,7 @@ class Canvas: ObservableObject {
     fileprivate let gridSize: CGFloat = 20
     
     var view: some View {
-        _CanvasView()
+        CanvasView()
             .environmentObject(self)
     }
     
@@ -56,7 +56,7 @@ class Canvas: ObservableObject {
     }
 }
 
-struct _CanvasView: View {
+struct CanvasView: View {
     @EnvironmentObject var model: Canvas
     
     @State private var subs = Set<AnyCancellable>()
@@ -110,12 +110,12 @@ struct _CanvasView: View {
                         }
                     
                     ForEach(model.items) { item in
-                        item.symbol.view(origin: origin)
+                        item.symbol.view(origin: origin, gridSize: model.gridSize, scale: model.scale)
                             .gesture(
                                 DragGesture()
                                     .onChanged({ gesture in
                                         withAnimation(.spring(response: 0.1)) {
-                                            item.symbol.position = (gesture.location - origin).snap(to: model.gridSize)
+                                            item.symbol.position = ((gesture.location - origin).scale(by: 1.0 / (model.gridSize * model.scale))).snap(to: 1)
                                         }
                                     })
                             )

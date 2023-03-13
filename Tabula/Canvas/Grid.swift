@@ -16,7 +16,7 @@ struct Grid: Shape {
     
     let gridSize: CGFloat
     let dotSize: CGFloat
-    let subdivisions: CGFloat = 5
+    let subdivisions: CGFloat = 6
     
     
     var animatableData: AnimatablePair<CGPoint.AnimatableData, CGFloat> {
