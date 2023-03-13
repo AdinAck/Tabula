@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct SchPrimaryToolbar: View {
+    @EnvironmentObject var canvas: Canvas
+    
+    @State private var tmp: Bool = false
+    
     private static let tools: [[(() -> Void, String)]] = [
         [({ }, "gear"), ({ }, "gear"), ({ }, "gear")],
         [({ }, "gear"), ({ }, "gear")],
@@ -18,11 +22,27 @@ struct SchPrimaryToolbar: View {
     var body: some View {
         // document functions
         Button {
-            // nothing
+            tmp.toggle()
         } label: {
             Image(systemName: "doc.badge.gearshape")
         }
         .help("Document Settings")
+        .sheet(isPresented: $tmp) {
+            VStack {
+                Text("Hello, World!")
+                    .frame(maxHeight: .infinity)
+                HStack {
+                    Spacer()
+                    
+                    Button("Done") {
+                        tmp.toggle()
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .padding(8)
+                }
+            }
+            .frame(width: 500, height: 300)
+        }
         
         Button {
             // nothing
@@ -68,6 +88,15 @@ struct SchPrimaryToolbar: View {
             Image(systemName: "chart.bar.doc.horizontal")
         }
         .help("Generate BOM")
+        
+        Divider()
+        
+        Button {
+            canvas.center()
+        } label: {
+            Image(systemName: "circle.circle")
+        }
+        .help("Center canvas")
     }
 }
 

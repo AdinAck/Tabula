@@ -11,6 +11,7 @@ struct SchematicEditor: View {
     @State var document: String? = nil
     
     @State var components: [Component] = []
+    @StateObject var canvas = Canvas()
     
     private func toggleSidebar() {
         NSApp.keyWindow?.firstResponder?.tryToPerform(#selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
@@ -26,7 +27,7 @@ struct SchematicEditor: View {
             }
             
             ZStack {
-                Canvas(items: components)
+                canvas.view
                 
                 HStack {
                     Spacer()
@@ -49,6 +50,7 @@ struct SchematicEditor: View {
                     Divider()
                     
                     SchPrimaryToolbar()
+                        .environmentObject(canvas)
                 }
             }
         }
