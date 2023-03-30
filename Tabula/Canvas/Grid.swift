@@ -36,27 +36,31 @@ struct Grid: Shape {
         
         let dotSize = dotSize * (doScale ? size : 1)
         
-        var rects: [CGRect] = []
+//        var rects: [CGRect] = []
         
         // ranges are extended by 2 because of a subtle float precision error i think
         for i in -2...Int(width) / Int(scaledGap) + 1 {
             for j in -2...Int(height) / Int(scaledGap) + 1 {
-                rects.append(CGRect(
+                let rect = CGRect(
                     x: origin.x.truncatingRemainder(dividingBy: scaledGap) + CGFloat(i) * scaledGap - dotSize / CGFloat(2),
                     y: origin.y.truncatingRemainder(dividingBy: scaledGap) + CGFloat(j) * scaledGap - dotSize / CGFloat(2),
                     width: dotSize,
                     height: dotSize
-                ))
+                )
+                
+                path.addRect(rect)
             }
         }
         
-        path.addRects(rects)
+//        path.addRects(rects)
     }
     
     func path(in rect: CGRect) -> Path {
         Path { path in
-            generator(path: &path, offset: 0, doScale: true)
-            generator(path: &path, offset: 1, doScale: false)
+            DispatchQueue.global().sync {
+                generator(path: &path, offset: 0, doScale: true)
+                generator(path: &path, offset: 1, doScale: false)
+            }
             
             path.addEllipse(in: CGRect(x: origin.x - 4, y: origin.y - 4, width: 8, height: 8))
         }

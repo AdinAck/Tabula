@@ -8,10 +8,14 @@
 import Foundation
 import SwiftUI
 
-class Symbol: ObservableObject {
-    typealias Lines = [[CGPoint]]
-    
+class Symbol: CanvasItemModel {
     @Published var position: CGPoint = CGPoint(x: 0, y: 0)
+    
+    var boundingBox: CGRect = .zero
+    
+    init() {
+        boundingBox = getBoundingBox()
+    }
     
     let lines: Lines = [[
         CGPoint(x: -2, y: -2),
@@ -27,7 +31,7 @@ class Symbol: ObservableObject {
     }
 }
 
-struct SymbolView: CanvasItem {
+struct SymbolView: CanvasItemView {
     var origin: CGPoint
     var position: CGPoint
     var scale: CGFloat

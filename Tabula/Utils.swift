@@ -28,6 +28,14 @@ extension CGPoint: AdditiveArithmetic {
     public func snap(to grid: CGFloat) -> CGPoint {
         CGPoint(x: (self.x / grid).rounded() * grid, y: (self.y / grid).rounded() * grid)
     }
+    
+    public func toWorld(origin: CGPoint, scale: CGFloat) -> Self {
+        return CGPoint(x: origin.x + self.x * scale, y: origin.y + self.y * scale)
+    }
+    
+    func toLocal(_ world: World) -> Self {
+        return CGPoint(x: (self.x - world.origin.x) / world.scale, y: (self.y - world.origin.y) / world.scale)
+    }
 }
 
 extension CGSize: AdditiveArithmetic {
@@ -41,5 +49,19 @@ extension CGSize: AdditiveArithmetic {
     
     public var magnitude: CGFloat {
         sqrt(pow(width, 2) + pow(height, 2))
+    }
+    
+    public func scale(by factor: Double) -> Self {
+        CGSize(width: width * factor, height: height * factor)
+    }
+}
+
+extension CGRect {
+    public static func + (lhs: Self, rhs: CGPoint) -> Self {
+        CGRect(origin: lhs.origin + rhs, size: lhs.size)
+    }
+    
+    func toLocal(_ world: World) -> Self {
+        CGRect(origin: origin.toLocal(world), size: size.scale(by: 1 / world.scale))
     }
 }

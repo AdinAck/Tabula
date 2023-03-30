@@ -10,6 +10,12 @@
 		402BBD9429BBABDD001193BA /* SchematicEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402BBD9329BBABDD001193BA /* SchematicEditor.swift */; };
 		402BBD9729BBB487001193BA /* SchSecondaryToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402BBD9629BBB487001193BA /* SchSecondaryToolbar.swift */; };
 		402BBD9929BBB8C7001193BA /* SchPrimaryToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402BBD9829BBB8C7001193BA /* SchPrimaryToolbar.swift */; };
+		402C104629C7F2BC009FFE2D /* Metal_TestApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C104529C7F2BC009FFE2D /* Metal_TestApp.swift */; };
+		402C104829C7F2BC009FFE2D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C104729C7F2BC009FFE2D /* ContentView.swift */; };
+		402C104A29C7F2BD009FFE2D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 402C104929C7F2BD009FFE2D /* Assets.xcassets */; };
+		402C104D29C7F2BD009FFE2D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 402C104C29C7F2BD009FFE2D /* Preview Assets.xcassets */; };
+		402C105329C7F3A7009FFE2D /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C105229C7F3A7009FFE2D /* Renderer.swift */; };
+		402C105629C7F851009FFE2D /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 402C105529C7F851009FFE2D /* Shaders.metal */; };
 		40555D5029B98AF3001422E1 /* TabulaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40555D4F29B98AF3001422E1 /* TabulaApp.swift */; };
 		40555D5229B98AF3001422E1 /* TabulaDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40555D5129B98AF3001422E1 /* TabulaDocument.swift */; };
 		40555D5429B98AF3001422E1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40555D5329B98AF3001422E1 /* ContentView.swift */; };
@@ -21,6 +27,7 @@
 		40555D6F29BA3DE4001422E1 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40555D6E29BA3DE4001422E1 /* Component.swift */; };
 		40555D7129BA3E0E001422E1 /* Symbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40555D7029BA3E0E001422E1 /* Symbol.swift */; };
 		40555D7329BA3E13001422E1 /* Footprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40555D7229BA3E13001422E1 /* Footprint.swift */; };
+		4063FF1829D50222008A014C /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4063FF1729D50222008A014C /* World.swift */; };
 		407E3D6429BEA4A200DBCAE0 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407E3D6329BEA4A200DBCAE0 /* Utils.swift */; };
 /* End PBXBuildFile section */
 
@@ -28,6 +35,15 @@
 		402BBD9329BBABDD001193BA /* SchematicEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchematicEditor.swift; sourceTree = "<group>"; };
 		402BBD9629BBB487001193BA /* SchSecondaryToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchSecondaryToolbar.swift; sourceTree = "<group>"; };
 		402BBD9829BBB8C7001193BA /* SchPrimaryToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchPrimaryToolbar.swift; sourceTree = "<group>"; };
+		402C104329C7F2BC009FFE2D /* Metal-Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Metal-Test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		402C104529C7F2BC009FFE2D /* Metal_TestApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metal_TestApp.swift; sourceTree = "<group>"; };
+		402C104729C7F2BC009FFE2D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		402C104929C7F2BD009FFE2D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		402C104C29C7F2BD009FFE2D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		402C104E29C7F2BD009FFE2D /* Metal_Test.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Metal_Test.entitlements; sourceTree = "<group>"; };
+		402C105229C7F3A7009FFE2D /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
+		402C105429C7F728009FFE2D /* definitions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = definitions.h; sourceTree = "<group>"; };
+		402C105529C7F851009FFE2D /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		40555D4C29B98AF3001422E1 /* Tabula.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tabula.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		40555D4F29B98AF3001422E1 /* TabulaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabulaApp.swift; sourceTree = "<group>"; };
 		40555D5129B98AF3001422E1 /* TabulaDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabulaDocument.swift; sourceTree = "<group>"; };
@@ -42,10 +58,18 @@
 		40555D6E29BA3DE4001422E1 /* Component.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
 		40555D7029BA3E0E001422E1 /* Symbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Symbol.swift; sourceTree = "<group>"; };
 		40555D7229BA3E13001422E1 /* Footprint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Footprint.swift; sourceTree = "<group>"; };
+		4063FF1729D50222008A014C /* World.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = World.swift; sourceTree = "<group>"; };
 		407E3D6329BEA4A200DBCAE0 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		402C104029C7F2BC009FFE2D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		40555D4929B98AF3001422E1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -77,10 +101,34 @@
 			path = Schematic;
 			sourceTree = "<group>";
 		};
+		402C104429C7F2BC009FFE2D /* Metal-Test */ = {
+			isa = PBXGroup;
+			children = (
+				402C104529C7F2BC009FFE2D /* Metal_TestApp.swift */,
+				402C104729C7F2BC009FFE2D /* ContentView.swift */,
+				402C105429C7F728009FFE2D /* definitions.h */,
+				402C105229C7F3A7009FFE2D /* Renderer.swift */,
+				402C105529C7F851009FFE2D /* Shaders.metal */,
+				402C104929C7F2BD009FFE2D /* Assets.xcassets */,
+				402C104E29C7F2BD009FFE2D /* Metal_Test.entitlements */,
+				402C104B29C7F2BD009FFE2D /* Preview Content */,
+			);
+			path = "Metal-Test";
+			sourceTree = "<group>";
+		};
+		402C104B29C7F2BD009FFE2D /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				402C104C29C7F2BD009FFE2D /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
 		40555D4329B98AF3001422E1 = {
 			isa = PBXGroup;
 			children = (
 				40555D4E29B98AF3001422E1 /* Tabula */,
+				402C104429C7F2BC009FFE2D /* Metal-Test */,
 				40555D4D29B98AF3001422E1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -89,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				40555D4C29B98AF3001422E1 /* Tabula.app */,
+				402C104329C7F2BC009FFE2D /* Metal-Test.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -122,6 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				40555D6329B98B19001422E1 /* Canvas.swift */,
+				4063FF1729D50222008A014C /* World.swift */,
 				40555D6C29BA3A11001422E1 /* CanvasItem.swift */,
 				40555D6629B9A8B1001422E1 /* Grid.swift */,
 			);
@@ -139,6 +189,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		402C104229C7F2BC009FFE2D /* Metal-Test */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 402C105129C7F2BD009FFE2D /* Build configuration list for PBXNativeTarget "Metal-Test" */;
+			buildPhases = (
+				402C103F29C7F2BC009FFE2D /* Sources */,
+				402C104029C7F2BC009FFE2D /* Frameworks */,
+				402C104129C7F2BC009FFE2D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Metal-Test";
+			productName = "Metal-Test";
+			productReference = 402C104329C7F2BC009FFE2D /* Metal-Test.app */;
+			productType = "com.apple.product-type.application";
+		};
 		40555D4B29B98AF3001422E1 /* Tabula */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 40555D5E29B98AF5001422E1 /* Build configuration list for PBXNativeTarget "Tabula" */;
@@ -166,6 +233,9 @@
 				LastSwiftUpdateCheck = 1420;
 				LastUpgradeCheck = 1420;
 				TargetAttributes = {
+					402C104229C7F2BC009FFE2D = {
+						CreatedOnToolsVersion = 14.2;
+					};
 					40555D4B29B98AF3001422E1 = {
 						CreatedOnToolsVersion = 14.2;
 					};
@@ -185,11 +255,21 @@
 			projectRoot = "";
 			targets = (
 				40555D4B29B98AF3001422E1 /* Tabula */,
+				402C104229C7F2BC009FFE2D /* Metal-Test */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		402C104129C7F2BC009FFE2D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				402C104D29C7F2BD009FFE2D /* Preview Assets.xcassets in Resources */,
+				402C104A29C7F2BD009FFE2D /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		40555D4A29B98AF3001422E1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -202,6 +282,17 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		402C103F29C7F2BC009FFE2D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				402C105629C7F851009FFE2D /* Shaders.metal in Sources */,
+				402C104829C7F2BC009FFE2D /* ContentView.swift in Sources */,
+				402C105329C7F3A7009FFE2D /* Renderer.swift in Sources */,
+				402C104629C7F2BC009FFE2D /* Metal_TestApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		40555D4829B98AF3001422E1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -218,6 +309,7 @@
 				40555D7129BA3E0E001422E1 /* Symbol.swift in Sources */,
 				40555D6D29BA3A11001422E1 /* CanvasItem.swift in Sources */,
 				402BBD9729BBB487001193BA /* SchSecondaryToolbar.swift in Sources */,
+				4063FF1829D50222008A014C /* World.swift in Sources */,
 				40555D6429B98B19001422E1 /* Canvas.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -225,6 +317,62 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		402C104F29C7F2BD009FFE2D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Metal-Test/Metal_Test.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Metal-Test/Preview Content\"";
+				DEVELOPMENT_TEAM = 84WPVNZ8GM;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "AdinAck.Metal-Test";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Metal-Test/definitions.h";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		402C105029C7F2BD009FFE2D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Metal-Test/Metal_Test.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Metal-Test/Preview Content\"";
+				DEVELOPMENT_TEAM = 84WPVNZ8GM;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "AdinAck.Metal-Test";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Metal-Test/definitions.h";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		40555D5C29B98AF5001422E1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -397,6 +545,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		402C105129C7F2BD009FFE2D /* Build configuration list for PBXNativeTarget "Metal-Test" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				402C104F29C7F2BD009FFE2D /* Debug */,
+				402C105029C7F2BD009FFE2D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		40555D4729B98AF3001422E1 /* Build configuration list for PBXProject "Tabula" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -21,73 +21,77 @@ struct SchPrimaryToolbar: View {
     
     var body: some View {
         // document functions
-        Button {
-            tmp.toggle()
-        } label: {
-            Image(systemName: "doc.badge.gearshape")
-        }
-        .help("Document Settings")
-        .sheet(isPresented: $tmp) {
-            VStack {
-                Text("Hello, World!")
-                    .frame(maxHeight: .infinity)
-                HStack {
-                    Spacer()
-                    
-                    Button("Done") {
-                        tmp.toggle()
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .padding(8)
-                }
+        Group {
+            Button {
+                tmp.toggle()
+            } label: {
+                Image(systemName: "doc.badge.gearshape")
             }
-            .frame(width: 500, height: 300)
+            .help("Document Settings")
+            .sheet(isPresented: $tmp) {
+                VStack {
+                    Text("Hello, World!")
+                        .frame(maxHeight: .infinity)
+                    HStack {
+                        Spacer()
+                        
+                        Button("Done") {
+                            tmp.toggle()
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .padding(8)
+                    }
+                }
+                .frame(width: 500, height: 300)
+            }
+            
+            Button {
+                // nothing
+            } label: {
+                Image(systemName: "square.and.arrow.up")
+            }
+            .help("Export")
+            
+            Button {
+                // nothing
+            } label: {
+                Image(systemName: "text.magnifyingglass")
+            }
+            .help("Find")
         }
-        
-        Button {
-            // nothing
-        } label: {
-            Image(systemName: "square.and.arrow.up")
-        }
-        .help("Export")
-        
-        Button {
-            // nothing
-        } label: {
-            Image(systemName: "text.magnifyingglass")
-        }
-        .help("Find")
         
         Divider()
         
         // symbol functions
-        Button {
-            // nothing
-        } label: {
-            Image(systemName: "rotate.right")
+        Group {
+            Button {
+                // nothing
+            } label: {
+                Image(systemName: "rotate.right")
+            }
+            .help("Rotate selected clockwise")
+            
+            Button {
+                // nothing
+            } label: {
+                Image(systemName: "rotate.left")
+            }
+            .help("Rotate selected counterclockwise")
+            
+            Button {
+                // nothing
+            } label: {
+                Image(systemName: "character.textbox")
+            }
+            .help("Annotate schematic")
+            
+            Button {
+                // nothing
+            } label: {
+                Image(systemName: "chart.bar.doc.horizontal")
+            }
+            .help("Generate BOM")
         }
-        .help("Rotate selected clockwise")
-        
-        Button {
-            // nothing
-        } label: {
-            Image(systemName: "rotate.left")
-        }
-        .help("Rotate selected counterclockwise")
-        
-        Button {
-            // nothing
-        } label: {
-            Image(systemName: "character.textbox")
-        }
-        .help("Annotate schematic")
-        
-        Button {
-            // nothing
-        } label: {
-            Image(systemName: "chart.bar.doc.horizontal")
-        }
-        .help("Generate BOM")
         
         Divider()
         
@@ -97,6 +101,14 @@ struct SchPrimaryToolbar: View {
             Image(systemName: "circle.circle")
         }
         .help("Center canvas")
+        
+        Button {
+            canvas.selected.removeAll()
+        } label: {
+            Image(systemName: "xmark.circle")
+        }
+        .disabled(canvas.selected.count == 0)
+        .keyboardShortcut(.cancelAction)
     }
 }
 

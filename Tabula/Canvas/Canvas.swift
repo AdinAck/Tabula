@@ -11,13 +11,25 @@ import Combine
 
 class Canvas: ObservableObject {
     // params
-    @Published var items: [Component] = [Component(symbol: Symbol())]
+    @Published var items: [Component] = [
+        Component(symbol: Symbol()),
+        Component(symbol: Symbol()),
+        Component(symbol: Symbol()),
+        Component(symbol: Symbol()),
+        Component(symbol: Symbol()),
+        Component(symbol: Symbol()),
+        Component(symbol: Symbol()),
+        Component(symbol: Symbol()),
+        Component(symbol: Symbol()),
+        Component(symbol: Symbol()),
+    ]
     
     // public
     @Published var scale: CGFloat = 1
     @Published var origin: CGPoint = CGPoint.zero
     
     @Published var selected: Set<Component> = Set()
+    @Published var selectionRect: CGRect = CGRect.zero
     
     // internal
     @Published fileprivate var mouse: CGPoint = CGPoint.zero
@@ -67,99 +79,166 @@ struct CanvasView: View {
     
     func trackEvents() {
         NSApp.publisher(for: \.currentEvent)
+            .throttle(for: .milliseconds(8),
+                      scheduler: DispatchQueue.main,
+                      latest: true)
             .sink { event in
-                if let event {
-                    switch event.type {
-                    case .scrollWheel:
-                        withAnimation(.spring(response: 0.2, dampingFraction: 1)) {
-                            model.magnify(delta: -event.deltaY/100)
+                    if let event {
+                        switch event.type {
+                        case .scrollWheel:
+                            withAnimation(.spring(response: 0.2, dampingFraction: 1)) {
+                                model.magnify(delta: -event.deltaY/50)
+                            }
+                        case .rightMouseDragged:
+                            model.origin.x += event.deltaX
+                            model.origin.y += event.deltaY
+                        case .rightMouseUp:
+                            withAnimation(.spring()) {
+                                model.clampPos()
+                            }
+                        case .mouseMoved:
+                            rawMouse = event.locationInWindow
+                        default:
+                            return
                         }
-                    case .rightMouseDragged:
-                        model.origin.x += event.deltaX
-                        model.origin.y += event.deltaY
-                    case .rightMouseUp:
-                        withAnimation(.spring()) {
-                            model.clampPos()
-                        }
-                    case .mouseMoved:
-                        rawMouse = event.locationInWindow
-                    default:
-                        return
+                        
                     }
-                    
-                }
             }
             .store(in: &subs)
     }
     
     var body: some View {
-        ZStack {
-            // background
-            Color.black
-            Color.white.opacity(0.1)
-                .onTapGesture {
-                    model.selected.removeAll()
-                }
-            
-            VStack {
-                // canvas
-                GeometryReader { geometry in
-                    let frame = geometry.frame(in: CoordinateSpace.global) // for mouse
+        VStack {
+            // canvas
+            GeometryReader { geometry in
+                let frame = geometry.frame(in: CoordinateSpace.global) // for mouse
+                
+                let width = geometry.size.width
+                let height = geometry.size.height
+                let center = CGPoint(x: width / 2, y: height / 2)
+                let origin = model.origin + center
+                
+                let world = World(origin: origin, scale: model.gridSize * model.scale)
+                
+                // background
+                Color.black
+                Color.white.opacity(0.1)
+                    .onTapGesture {
+                        model.selected.removeAll()
+                    }
+                    // TODO: shift drag to add more items to selection
+                    .gesture(
+                        DragGesture()
+                            .onChanged({ gesture in
+                                model.selectionRect = CGRect(origin: gesture.startLocation, size: gesture.translation)
+                                
+                                for component in model.items {
+                                    let box = component.symbol.boundingBox + component.symbol.position
+                                    
+                                    if model.selectionRect.toLocal(world).intersects(box) {
+                                        model.selected.insert(component)
+                                    } else {
+                                        model.selected.remove(component)
+                                    }
+                                }
+                            })
+                            .onEnded({ gesture in
+                                model.selectionRect = .zero
+                            })
+                    )
+                
+                // grid
+                Grid(width: width, height: height, origin: origin, scale: model.scale, gridSize: model.gridSize, dotSize: 2)
+                    .onChange(of: rawMouse) { newValue in
+                        model.mouse = CGPoint(x: rawMouse.x - frame.origin.x, y: height - rawMouse.y + frame.origin.y) - center
+                    }
+                
+                // components
+                ForEach(model.items) { item in
+                    let selected = model.selected.contains(item)
                     
-                    let width = geometry.size.width
-                    let height = geometry.size.height
-                    let center = CGPoint(x: width / 2, y: height / 2)
-                    let origin = model.origin + center
-                    
-                    // grid and items
-                    Grid(width: width, height: height, origin: origin, scale: model.scale, gridSize: model.gridSize, dotSize: 2)
-                        .onChange(of: rawMouse) { newValue in
-                            model.mouse = CGPoint(x: rawMouse.x - frame.origin.x, y: height - rawMouse.y + frame.origin.y) - center
-                        }
-                    
-                    ForEach(model.items) { item in
-                        let selected = model.selected.contains(item)
-                        
-                        item.symbol.view(origin: origin, gridSize: model.gridSize, scale: model.scale)
-                            .gesture(
-                                DragGesture()
-                                    .onChanged({ gesture in
+                    item.symbol.view(origin: origin, gridSize: model.gridSize, scale: model.scale)
+                        .gesture(
+                            DragGesture()
+                                .onChanged({ gesture in
+                                    if !model.selected.contains(item) {
+                                        model.selected.removeAll()
                                         model.selected.insert(item)
+                                    }
+                                    
+                                    var offsets: [Component: CGPoint] = [:]
+                                    
+                                    for selectedItem in model.selected {
+                                        offsets[selectedItem] = selectedItem.symbol.position - item.symbol.position
+                                    }
+                                    
+                                    withAnimation(.spring(response: 0.1)) {
+                                        item.symbol.position = gesture.location.toLocal(world).snap(to: 1)
                                         
-                                        withAnimation(.spring(response: 0.1)) {
-                                            item.symbol.position = ((gesture.location - origin).scale(by: 1.0 / (model.gridSize * model.scale))).snap(to: 1)
+                                        for selectedItem in model.selected {
+                                            if selectedItem != item {
+                                                selectedItem.symbol.position = item.symbol.position + offsets[selectedItem]!
+                                            }
                                         }
-                                    })
-                                    .onEnded({ gesture in
-                                        model.selected.remove(item)
-                                    })
-                            )
-                            .onTapGesture {
-//                                withAnimation(.spring(response: 0.2, dampingFraction: 1)) {
-//                                    item.symbol.position = CGPoint(x: 0, y: 0)
-//                                }
+                                    }
+                                })
+                        )
+                        .gesture(TapGesture().modifiers(.shift).onEnded({ gesture in
+                            if model.selected.contains(item) {
+                                model.selected.remove(item)
+                            } else {
                                 model.selected.insert(item)
                             }
-                            .shadow(color: .blue, radius: selected ? 10 * model.scale : 0)
-                    }
+                        }))
+                        .onTapGesture {
+                            model.selected.removeAll()
+                            model.selected.insert(item)
+                        }
+                        .contextMenu { // doesn't select component but whatever
+                            Button("Test") {
+                                
+                            }
+                        }
+                        .shadow(color: .blue, radius: selected ? 10 * model.scale : 0)
                 }
-                .layoutPriority(1)
+                .drawingGroup()
                 
-                // canvas stats
-                HStack {
-                    // stats
-                    Text("**Scale:** \(String(format: "%.2f", model.scale))")
-                    Text("**X:** \(Int((-model.origin.x / (model.gridSize * model.scale)).rounded()))")
-                    Text("**Y:** \(Int((-model.origin.y / (model.gridSize * model.scale)).rounded()))")
-                    Text("**Mouse X:** \(Int(((model.mouse.x - model.origin.x) / (model.gridSize * model.scale)).rounded()))")
-                    Text("**Mouse Y:** \(Int(((model.mouse.y - model.origin.y) / (model.gridSize * model.scale)).rounded()))")
-                    
-                    Spacer()
+                // selection rectangle
+                Path { path in
+                    path.addRect(model.selectionRect)
                 }
-                .padding(8)
-                .background(.background)
-                .animation(.none, value: model.scale)
+                .fill(.white.opacity(0.1))
+                
+                Path { path in
+                    path.addRect(model.selectionRect)
+                }
+                .stroke(style: StrokeStyle(lineWidth: 2))
+                .foregroundColor(.white)
             }
+            .layoutPriority(1)
+            
+            // canvas stats
+            HStack {
+                // stats
+                let world = World(origin: model.origin, scale: model.gridSize * model.scale)
+                let mousePos = model.mouse.toLocal(world)
+                let viewPos = model.origin.toLocal(World(origin: .zero, scale: model.gridSize * model.scale * -1))
+                
+                Text("**Scale:** \(String(format: "%.2f", model.scale))")
+                Text("**X:** \(Int((viewPos.x).rounded()))")
+                Text("**Y:** \(Int((viewPos.y).rounded()))")
+                Text("**Mouse X:** \(Int((mousePos.x).rounded()))")
+                Text("**Mouse Y:** \(Int((mousePos.y).rounded()))")
+                
+                if model.selected.count > 0 {
+                    Text("**Selected:** \(model.selected.count)")
+                }
+                
+                Spacer()
+            }
+            .padding(8)
+            .background(.background)
+            .animation(.none, value: model.scale)
         }
         .onAppear {
             trackEvents()
