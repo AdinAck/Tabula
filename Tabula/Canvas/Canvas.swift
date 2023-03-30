@@ -29,6 +29,7 @@ class Canvas: ObservableObject {
     @Published var origin: CGPoint = CGPoint.zero
     
     @Published var selected: Set<Component> = Set()
+    @Published fileprivate var tmpSelected: Set<Component> = Set()
     @Published var selectionRect: CGRect = CGRect.zero
     
     // internal
@@ -107,6 +108,10 @@ struct CanvasView: View {
             .store(in: &subs)
     }
     
+    func isSelected(_ component: Component) -> Bool {
+        return model.selected.contains(component) || model.tmpSelected.contains(component)
+    }
+    
     var body: some View {
         VStack {
             // canvas
@@ -126,7 +131,28 @@ struct CanvasView: View {
                     .onTapGesture {
                         model.selected.removeAll()
                     }
-                    // TODO: shift drag to add more items to selection
+                    .gesture( // TODO: one last thing, shift drage to deselect already selected components
+                        DragGesture()
+                            .modifiers(.shift)
+                            .onChanged({ gesture in
+                                model.selectionRect = CGRect(origin: gesture.startLocation, size: gesture.translation)
+                                
+                                for component in model.items {
+                                    let box = component.symbol.boundingBox + component.symbol.position
+                                    
+                                    if model.selectionRect.toLocal(world).intersects(box) {
+                                        model.tmpSelected.insert(component)
+                                    } else {
+                                        model.tmpSelected.remove(component)
+                                    }
+                                }
+                            })
+                            .onEnded({ gesture in
+                                model.selectionRect = .zero
+                                model.selected = model.selected.union(model.tmpSelected)
+                                model.tmpSelected.removeAll()
+                            })
+                    )
                     .gesture(
                         DragGesture()
                             .onChanged({ gesture in
@@ -155,13 +181,13 @@ struct CanvasView: View {
                 
                 // components
                 ForEach(model.items) { item in
-                    let selected = model.selected.contains(item)
+                    let selected = isSelected(item)
                     
                     item.symbol.view(origin: origin, gridSize: model.gridSize, scale: model.scale)
                         .gesture(
                             DragGesture()
                                 .onChanged({ gesture in
-                                    if !model.selected.contains(item) {
+                                    if !isSelected(item) {
                                         model.selected.removeAll()
                                         model.selected.insert(item)
                                     }
@@ -184,7 +210,7 @@ struct CanvasView: View {
                                 })
                         )
                         .gesture(TapGesture().modifiers(.shift).onEnded({ gesture in
-                            if model.selected.contains(item) {
+                            if isSelected(item) {
                                 model.selected.remove(item)
                             } else {
                                 model.selected.insert(item)
@@ -199,7 +225,7 @@ struct CanvasView: View {
                                 
                             }
                         }
-                        .shadow(color: .blue, radius: selected ? 10 * model.scale : 0)
+                        .shadow(color: selected ? .blue : .clear, radius: 10 * model.scale)
                 }
                 .drawingGroup()
                 
