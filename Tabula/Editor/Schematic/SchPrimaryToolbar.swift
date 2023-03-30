@@ -95,21 +95,35 @@ struct SchPrimaryToolbar: View {
         
         Divider()
         
-        Button {
-            canvas.center()
-        } label: {
-            Image(systemName: "circle.circle")
+        Group {
+            Button {
+                // nothing
+            } label: {
+                Image(systemName: "plus")
+            }
+            .help("Add symbol")
         }
-        .help("Center canvas")
         
-        Button {
-            canvas.selected.removeAll()
-        } label: {
-            Image(systemName: "xmark.circle")
+        Divider()
+        
+        // misc
+        Group {
+            Button {
+                canvas.center()
+            } label: {
+                Image(systemName: "circle.circle")
+            }
+            .help("Center canvas")
+            
+            Button {
+                canvas.selected.removeAll()
+            } label: {
+                Image(systemName: "xmark.circle")
+            }
+            .disabled(canvas.selected.count == 0)
+            .keyboardShortcut(.cancelAction)
+            .help("Clear selection")
         }
-        .disabled(canvas.selected.count == 0)
-        .keyboardShortcut(.cancelAction)
-        .help("Clear selection")
     }
 }
 

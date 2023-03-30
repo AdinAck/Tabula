@@ -251,21 +251,28 @@ struct CanvasView: View {
                 let viewPos = model.origin.toLocal(World(origin: .zero, scale: model.gridSize * model.scale * -1))
                 
                 Text("**Scale:** \(String(format: "%.2f", model.scale))")
+                    .frame(maxWidth: .infinity)
                 Text("**X:** \(Int((viewPos.x).rounded()))")
+                    .frame(maxWidth: .infinity)
                 Text("**Y:** \(Int((viewPos.y).rounded()))")
+                    .frame(maxWidth: .infinity)
                 Text("**Mouse X:** \(Int((mousePos.x).rounded()))")
+                    .frame(maxWidth: .infinity)
                 Text("**Mouse Y:** \(Int((mousePos.y).rounded()))")
+                    .frame(maxWidth: .infinity)
                 
                 if model.selected.count > 0 {
                     Text("**Selected:** \(model.selected.count)")
+                        .frame(maxWidth: .infinity)
+                        .animation(.none, value: model.selected)
+                        .transition(.move(edge: .trailing))
                 }
-                
-                Spacer()
             }
             .padding(8)
-            .background(.background)
             .animation(.none, value: model.scale)
+            .animation(.spring(response: 0.5, dampingFraction: 1), value: model.selected)
         }
+        .background(.background)
         .onAppear {
             trackEvents()
         }
