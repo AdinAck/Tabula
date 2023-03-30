@@ -33,6 +33,10 @@ extension CGPoint: AdditiveArithmetic {
         return CGPoint(x: origin.x + self.x * scale, y: origin.y + self.y * scale)
     }
     
+    func toWorld(_ world: World) -> Self {
+        return CGPoint(x: world.origin.x + self.x * world.scale, y: world.origin.y + self.y * world.scale)
+    }
+    
     func toLocal(_ world: World) -> Self {
         return CGPoint(x: (self.x - world.origin.x) / world.scale, y: (self.y - world.origin.y) / world.scale)
     }

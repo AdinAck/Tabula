@@ -109,6 +109,7 @@ struct SchPrimaryToolbar: View {
         }
         .disabled(canvas.selected.count == 0)
         .keyboardShortcut(.cancelAction)
+        .help("Clear selection")
     }
 }
 

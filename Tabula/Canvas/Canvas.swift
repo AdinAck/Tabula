@@ -131,7 +131,7 @@ struct CanvasView: View {
                     .onTapGesture {
                         model.selected.removeAll()
                     }
-                    .gesture( // TODO: one last thing, shift drage to deselect already selected components
+                    .gesture(
                         DragGesture()
                             .modifiers(.shift)
                             .onChanged({ gesture in
@@ -161,7 +161,7 @@ struct CanvasView: View {
                                 for component in model.items {
                                     let box = component.symbol.boundingBox + component.symbol.position
                                     
-                                    if model.selectionRect.toLocal(world).intersects(box) {
+                                    if (model.selectionRect.size.width >= 0 ? model.selectionRect.toLocal(world).contains(box) : model.selectionRect.toLocal(world).intersects(box)) {
                                         model.selected.insert(component)
                                     } else {
                                         model.selected.remove(component)
@@ -233,7 +233,7 @@ struct CanvasView: View {
                 Path { path in
                     path.addRect(model.selectionRect)
                 }
-                .fill(.white.opacity(0.1))
+                .fill((model.selectionRect.size.width >= 0 ? Color.yellow : Color.blue).opacity(0.1))
                 
                 Path { path in
                     path.addRect(model.selectionRect)
@@ -272,13 +272,6 @@ struct CanvasView: View {
         .onDisappear {
             for sub in subs {
                 sub.cancel()
-            }
-        }
-        .onHover { hovering in
-            if hovering {
-                NSCursor.crosshair.push()
-            } else {
-                NSCursor.pop()
             }
         }
     }

@@ -41,9 +41,9 @@ struct SymbolView: CanvasItemView {
     var body: some View {
         Path { path in
             for line in lines {
-                path.move(to: toWorld(line[0]))
+                path.move(to: (position + line[0]).toWorld(origin: origin, scale: scale))
                 path.addLines(line.map({ point in
-                    toWorld(point)
+                    (position + point).toWorld(origin: origin, scale: scale)
                 }))
             }
         }

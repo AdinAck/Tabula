@@ -58,8 +58,4 @@ extension CanvasItemView {
         get { AnimatablePair(AnimatablePair(CGPoint.AnimatableData(origin.x, origin.y), CGPoint.AnimatableData(position.x, position.y)), scale) }
         set { (((origin.x, origin.y), (position.x, position.y)), scale) = (((newValue.first.first.first, newValue.first.first.second), (newValue.first.second.first, newValue.first.second.second)), newValue.second) }
     }
-    
-    func toWorld(_ point: CGPoint) -> CGPoint {
-        return CGPoint(x: origin.x + (position.x + point.x) * scale, y: origin.y + (position.y + point.y) * scale)
-    }
 }
