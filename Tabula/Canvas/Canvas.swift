@@ -84,25 +84,27 @@ struct CanvasView: View {
                       scheduler: DispatchQueue.main,
                       latest: true)
             .sink { event in
-                    if let event {
-                        switch event.type {
-                        case .scrollWheel:
-                            withAnimation(.spring(response: 0.2, dampingFraction: 1)) {
-                                model.magnify(delta: -event.deltaY/50)
+                if true {
+                        if let event {
+                            switch event.type {
+                            case .scrollWheel:
+                                withAnimation(.spring(response: 0.2, dampingFraction: 1)) {
+                                    model.magnify(delta: -event.deltaY/50)
+                                }
+                            case .rightMouseDragged:
+                                model.origin.x += event.deltaX
+                                model.origin.y += event.deltaY
+                            case .rightMouseUp:
+                                withAnimation(.spring()) {
+                                    model.clampPos()
+                                }
+                            case .mouseMoved:
+                                rawMouse = event.locationInWindow
+                            default:
+                                return
                             }
-                        case .rightMouseDragged:
-                            model.origin.x += event.deltaX
-                            model.origin.y += event.deltaY
-                        case .rightMouseUp:
-                            withAnimation(.spring()) {
-                                model.clampPos()
-                            }
-                        case .mouseMoved:
-                            rawMouse = event.locationInWindow
-                        default:
-                            return
+                            
                         }
-                        
                     }
             }
             .store(in: &subs)
@@ -251,24 +253,18 @@ struct CanvasView: View {
                 let viewPos = model.origin.toLocal(World(origin: .zero, scale: model.gridSize * model.scale * -1))
                 
                 Text("**Scale:** \(String(format: "%.2f", model.scale))")
-                    .frame(maxWidth: .infinity)
                 Text("**X:** \(Int((viewPos.x).rounded()))")
-                    .frame(maxWidth: .infinity)
                 Text("**Y:** \(Int((viewPos.y).rounded()))")
-                    .frame(maxWidth: .infinity)
                 Text("**Mouse X:** \(Int((mousePos.x).rounded()))")
-                    .frame(maxWidth: .infinity)
                 Text("**Mouse Y:** \(Int((mousePos.y).rounded()))")
-                    .frame(maxWidth: .infinity)
                 
                 if model.selected.count > 0 {
                     Text("**Selected:** \(model.selected.count)")
-                        .frame(maxWidth: .infinity)
                         .animation(.none, value: model.selected)
-                        .transition(.move(edge: .trailing))
                 }
             }
             .padding(8)
+            .background(.background)
             .animation(.none, value: model.scale)
             .animation(.spring(response: 0.5, dampingFraction: 1), value: model.selected)
         }

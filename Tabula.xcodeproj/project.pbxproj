@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		40114C7B29E757F000D6DFA9 /* SymbolEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40114C7A29E757F000D6DFA9 /* SymbolEditor.swift */; };
+		40114C7D29E7587C00D6DFA9 /* SymPrimaryToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40114C7C29E7587C00D6DFA9 /* SymPrimaryToolbar.swift */; };
+		40114C7F29E7588400D6DFA9 /* SymSecondaryToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40114C7E29E7588400D6DFA9 /* SymSecondaryToolbar.swift */; };
 		402BBD9429BBABDD001193BA /* SchematicEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402BBD9329BBABDD001193BA /* SchematicEditor.swift */; };
 		402BBD9729BBB487001193BA /* SchSecondaryToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402BBD9629BBB487001193BA /* SchSecondaryToolbar.swift */; };
 		402BBD9929BBB8C7001193BA /* SchPrimaryToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402BBD9829BBB8C7001193BA /* SchPrimaryToolbar.swift */; };
@@ -32,6 +35,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		40114C7A29E757F000D6DFA9 /* SymbolEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolEditor.swift; sourceTree = "<group>"; };
+		40114C7C29E7587C00D6DFA9 /* SymPrimaryToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymPrimaryToolbar.swift; sourceTree = "<group>"; };
+		40114C7E29E7588400D6DFA9 /* SymSecondaryToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymSecondaryToolbar.swift; sourceTree = "<group>"; };
 		402BBD9329BBABDD001193BA /* SchematicEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchematicEditor.swift; sourceTree = "<group>"; };
 		402BBD9629BBB487001193BA /* SchSecondaryToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchSecondaryToolbar.swift; sourceTree = "<group>"; };
 		402BBD9829BBB8C7001193BA /* SchPrimaryToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchPrimaryToolbar.swift; sourceTree = "<group>"; };
@@ -80,12 +86,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		40114C7929E757D900D6DFA9 /* Symbol */ = {
+			isa = PBXGroup;
+			children = (
+				40114C7A29E757F000D6DFA9 /* SymbolEditor.swift */,
+				40555D7029BA3E0E001422E1 /* Symbol.swift */,
+				40114C7C29E7587C00D6DFA9 /* SymPrimaryToolbar.swift */,
+				40114C7E29E7588400D6DFA9 /* SymSecondaryToolbar.swift */,
+			);
+			path = Symbol;
+			sourceTree = "<group>";
+		};
 		402BBD9529BBB478001193BA /* Editor */ = {
 			isa = PBXGroup;
 			children = (
 				40555D6E29BA3DE4001422E1 /* Component.swift */,
 				407E3D6229BEA49400DBCAE0 /* Layout */,
 				402BBD9A29BBDA00001193BA /* Schematic */,
+				40114C7929E757D900D6DFA9 /* Symbol */,
 			);
 			path = Editor;
 			sourceTree = "<group>";
@@ -94,7 +112,6 @@
 			isa = PBXGroup;
 			children = (
 				402BBD9329BBABDD001193BA /* SchematicEditor.swift */,
-				40555D7029BA3E0E001422E1 /* Symbol.swift */,
 				402BBD9829BBB8C7001193BA /* SchPrimaryToolbar.swift */,
 				402BBD9629BBB487001193BA /* SchSecondaryToolbar.swift */,
 			);
@@ -299,15 +316,18 @@
 			files = (
 				40555D5029B98AF3001422E1 /* TabulaApp.swift in Sources */,
 				40555D6F29BA3DE4001422E1 /* Component.swift in Sources */,
+				40114C7D29E7587C00D6DFA9 /* SymPrimaryToolbar.swift in Sources */,
 				407E3D6429BEA4A200DBCAE0 /* Utils.swift in Sources */,
 				40555D5229B98AF3001422E1 /* TabulaDocument.swift in Sources */,
 				40555D5429B98AF3001422E1 /* ContentView.swift in Sources */,
+				40114C7F29E7588400D6DFA9 /* SymSecondaryToolbar.swift in Sources */,
 				40555D6729B9A8B1001422E1 /* Grid.swift in Sources */,
 				40555D7329BA3E13001422E1 /* Footprint.swift in Sources */,
 				402BBD9429BBABDD001193BA /* SchematicEditor.swift in Sources */,
 				402BBD9929BBB8C7001193BA /* SchPrimaryToolbar.swift in Sources */,
 				40555D7129BA3E0E001422E1 /* Symbol.swift in Sources */,
 				40555D6D29BA3A11001422E1 /* CanvasItem.swift in Sources */,
+				40114C7B29E757F000D6DFA9 /* SymbolEditor.swift in Sources */,
 				402BBD9729BBB487001193BA /* SchSecondaryToolbar.swift in Sources */,
 				4063FF1829D50222008A014C /* World.swift in Sources */,
 				40555D6429B98B19001422E1 /* Canvas.swift in Sources */,

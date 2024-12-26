@@ -17,5 +17,9 @@ struct TabulaApp: App {
         Window("Schematic Editor", id: "sch") {
             SchematicEditor()
         }
+        
+        Window("Symbol Editor", id: "sym") {
+            SymbolEditor()
+        }
     }
 }
